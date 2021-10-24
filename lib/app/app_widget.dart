@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_list/app/core/database/sql_adm_connection.dart';
+import 'package:todo_list/app/modules/auth/auth_module.dart';
+import 'package:todo_list/app/modules/auth/login/login_controller.dart';
+import 'package:todo_list/app/modules/auth/login/login_page.dart';
 import 'package:todo_list/app/modules/splash/splash_page.dart';
 
 class AppWidget extends StatefulWidget {
@@ -25,9 +29,13 @@ class _AppWidgetState extends State<AppWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'TODO App',
-      home: SplashPage(),
+      initialRoute: '/login',
+      routes: {
+        ...AuthModule().routers,
+      },
+      home: const SplashPage(),
     );
   }
 }
