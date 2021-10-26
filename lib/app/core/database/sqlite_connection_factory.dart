@@ -39,7 +39,7 @@ class SqliteConnectionFactory {
   }
 
   void closeConnection() {
-    _db!.close();
+    _db?.close();
     _db = null;
   }
 
