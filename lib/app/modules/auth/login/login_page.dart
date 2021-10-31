@@ -153,14 +153,18 @@ class _LoginPageState extends State<LoginPage> {
                           child: Column(
                             children: [
                               const SizedBox(height: 30),
-                              SignInButton(Buttons.Google,
-                                  text: 'Continue com o Google',
-                                  padding: const EdgeInsets.all(5),
-                                  shape: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  onPressed: () {}),
+                              SignInButton(
+                                Buttons.Google,
+                                text: 'Continue com o Google',
+                                padding: const EdgeInsets.all(5),
+                                shape: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                  borderSide: BorderSide.none,
+                                ),
+                                onPressed: () => context
+                                    .read<LoginController>()
+                                    .googleLogin(),
+                              ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
