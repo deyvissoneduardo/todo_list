@@ -17,6 +17,7 @@ class _AppWidgetState extends State<AppWidget> {
   @override
   void initState() {
     WidgetsBinding.instance?.addObserver(sqliteconnection);
+    FirebaseAuth auth = FirebaseAuth.instance;
     super.initState();
   }
 

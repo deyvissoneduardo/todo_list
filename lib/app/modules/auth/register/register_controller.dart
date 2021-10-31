@@ -1,11 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:todo_list/app/core/notifier/default_change_notifier.dart';
 import 'package:todo_list/app/services/user/user_service.dart';
 
-class RegisterController extends ChangeNotifier {
+class RegisterController extends DefaultChangeNotifier {
   final UserService _userService;
-  String? error;
-  bool success = false;
 
   RegisterController({
     required UserService userService,
@@ -13,18 +11,18 @@ class RegisterController extends ChangeNotifier {
 
   Future<void> registerUser(String email, String password) async {
     try {
-      error = null;
-      success = false;
+      showLoadingAndResetState();
       notifyListeners();
       final user = await _userService.register(email, password);
       if (user != null) {
-        success = true;
+        success();
       } else {
-        error = 'Error ao cadastra-se';
+        setError('Error ao cadastra-se');
       }
     } on FirebaseAuthException catch (e) {
-      error = e.message;
+      setError(e.message);
     } finally {
+      hideLoading();
       notifyListeners();
     }
   }
