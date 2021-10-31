@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:todo_list/app/core/notifier/default_change_notifier.dart';
+import 'package:todo_list/app/exception/auth_exception.dart';
 import 'package:todo_list/app/services/user/user_service.dart';
 
 class RegisterController extends DefaultChangeNotifier {
@@ -19,7 +20,7 @@ class RegisterController extends DefaultChangeNotifier {
       } else {
         setError('Error ao cadastra-se');
       }
-    } on FirebaseAuthException catch (e) {
+    } on AuthException catch (e) {
       setError(e.message);
     } finally {
       hideLoading();
