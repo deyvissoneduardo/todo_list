@@ -23,5 +23,9 @@ class UserServiceImpl implements UserService {
   Future<User?> googleLogin() => _userRepository.googleLogin();
 
   @override
-  Future<User?> logaut() => _userRepository.logaut();
+  Future<User?> logout() => _userRepository.logout();
+
+  @override
+  Future<void> updateDisplayName(String name) =>
+      _userRepository.updateDisplayName(name);
 }
