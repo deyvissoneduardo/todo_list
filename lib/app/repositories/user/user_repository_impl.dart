@@ -105,7 +105,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<User?> googleLogout() async {
+  Future<User?> logaut() async {
     await GoogleSignIn().signOut();
     _firebaseAuth.signOut();
   }
