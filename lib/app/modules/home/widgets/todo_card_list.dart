@@ -31,7 +31,7 @@ class _TodoCardListState extends State<TodoCardList> {
         children: [
           Text(
             '10 TASKS',
-            style: context.titleText.copyWith(
+            style: context.titleStyle.copyWith(
               fontSize: 10,
               color: Colors.white,
             ),
