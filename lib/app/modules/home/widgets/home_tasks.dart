@@ -14,7 +14,7 @@ class HomeTasks extends StatelessWidget {
           const SizedBox(height: 20),
           Text(
             'TASK\'S DE HOJE',
-            style: context.titleText,
+            style: context.titleStyle,
           ),
           Column(
             children: const [

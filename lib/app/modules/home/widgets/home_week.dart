@@ -13,7 +13,7 @@ class HomeWeek extends StatelessWidget {
         const SizedBox(height: 20),
         Text(
           'DIA DA SEMANA',
-          style: context.titleText,
+          style: context.titleStyle,
         ),
         const SizedBox(height: 10),
         SizedBox(
