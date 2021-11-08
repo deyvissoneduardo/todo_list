@@ -33,9 +33,7 @@ class _LoginPageState extends State<LoginPage> {
                 Messages.of(context).showInfo(notifier.infoMessage!);
               }
             },
-            successCallback: (notifier, listenerInstance) {
-              print('LOGIN SUCCESSFULL');
-            });
+            successCallback: (notifier, listenerInstance) {});
   }
 
   @override

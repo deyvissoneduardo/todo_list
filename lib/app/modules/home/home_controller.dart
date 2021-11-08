@@ -4,6 +4,7 @@ import 'package:todo_list/app/models/task_model.dart';
 import 'package:todo_list/app/models/total_tasks_model.dart';
 import 'package:todo_list/app/models/week_task_model.dart';
 import 'package:todo_list/app/services/task/task_service.dart';
+import 'package:todo_list/main.dart';
 
 class HomeController extends DefaultChangeNotifier {
   final TaskService _taskService;
@@ -11,6 +12,11 @@ class HomeController extends DefaultChangeNotifier {
   TotalTasksModel? todayTotalTasks;
   TotalTasksModel? tomorrowTotalTasks;
   TotalTasksModel? weekTotalTasks;
+  List<TaskModel> allTasks = [];
+  List<TaskModel> filteredTasks = [];
+  DateTime? initialDateOfWeek;
+  DateTime? selectedDay;
+
   HomeController({required TaskService taskService})
       : _taskService = taskService;
 
@@ -40,6 +46,55 @@ class HomeController extends DefaultChangeNotifier {
       totalTaskFinish: weekTasks.tasks.where((task) => task.finished).length,
     );
 
+    notifyListeners();
+  }
+
+  Future<void> findTasks({required TaskFilterEnum filter}) async {
+    filterSelected = filter;
+    showLoading();
+    notifyListeners();
+    List<TaskModel> tasks;
+    switch (filter) {
+      case TaskFilterEnum.today:
+        tasks = await _taskService.getToday();
+        break;
+      case TaskFilterEnum.tomorrow:
+        tasks = await _taskService.getTomorrow();
+        break;
+      case TaskFilterEnum.week:
+        final weekModel = await _taskService.getWeek();
+        initialDateOfWeek = weekModel.startDate;
+        tasks = weekModel.tasks;
+        break;
+    }
+    filteredTasks = tasks;
+    allTasks = tasks;
+
+    if (filter == TaskFilterEnum.week) {
+      if (selectedDay != null) {
+        filterByDay(selectedDay!);
+      } else if (initialDateOfWeek != null) {
+        filterByDay(initialDateOfWeek!);
+      }
+    } else {
+      selectedDay = null;
+    }
+
+    hideLoading();
+    notifyListeners();
+  }
+
+  void filterByDay(DateTime date) {
+    selectedDay = date;
+    filteredTasks = allTasks.where((task) {
+      return task.dateTime == date;
+    }).toList();
+    notifyListeners();
+  }
+
+  void refreshPage() async {
+    await findTasks(filter: filterSelected);
+    loadTotalTasks();
     notifyListeners();
   }
 }
