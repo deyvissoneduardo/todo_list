@@ -20,7 +20,7 @@ class TaskRepositoryImpl implements TaskRepository {
   }
 
   @override
-  Future<List<TaskModel>> fyndByPerid(DateTime start, DateTime end) async {
+  Future<List<TaskModel>> findByPeriod(DateTime start, DateTime end) async {
     final startFilter = DateTime(start.year, start.month, start.day, 0, 0, 0);
     final endFilter = DateTime(end.year, end.month, end.day, 23, 59, 59);
 
@@ -29,7 +29,7 @@ class TaskRepositoryImpl implements TaskRepository {
     select
     * from todo
     where data_hora between ? and ?
-    orde by data_hora
+    order by data_hora
     ''', [
       startFilter.toIso8601String(),
       endFilter.toIso8601String(),

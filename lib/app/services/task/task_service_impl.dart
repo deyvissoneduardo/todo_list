@@ -14,13 +14,13 @@ class TaskServiceImpl implements TaskService {
 
   @override
   Future<List<TaskModel>> getToday() {
-    return _taskRepository.fyndByPerid(DateTime.now(), DateTime.now());
+    return _taskRepository.findByPeriod(DateTime.now(), DateTime.now());
   }
 
   @override
   Future<List<TaskModel>> getTomorrow() {
     var tomorrowDate = DateTime.now().add(const Duration(days: 1));
-    return _taskRepository.fyndByPerid(tomorrowDate, tomorrowDate);
+    return _taskRepository.findByPeriod(tomorrowDate, tomorrowDate);
   }
 
   @override
@@ -33,7 +33,7 @@ class TaskServiceImpl implements TaskService {
           startFilter.subtract(Duration(days: (startFilter.weekday - 1)));
     }
     endFilter = startFilter.add(const Duration(days: 7));
-    final tasks = await _taskRepository.fyndByPerid(startFilter, endFilter);
+    final tasks = await _taskRepository.findByPeriod(startFilter, endFilter);
     return WeekTaskModel(
       startDate: startFilter,
       endDate: endFilter,
