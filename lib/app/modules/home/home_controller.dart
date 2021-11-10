@@ -4,7 +4,6 @@ import 'package:todo_list/app/models/task_model.dart';
 import 'package:todo_list/app/models/total_tasks_model.dart';
 import 'package:todo_list/app/models/week_task_model.dart';
 import 'package:todo_list/app/services/task/task_service.dart';
-import 'package:todo_list/main.dart';
 
 class HomeController extends DefaultChangeNotifier {
   final TaskService _taskService;
@@ -16,6 +15,7 @@ class HomeController extends DefaultChangeNotifier {
   List<TaskModel> filteredTasks = [];
   DateTime? initialDateOfWeek;
   DateTime? selectedDay;
+  bool showFinishingTasks = false;
 
   HomeController({required TaskService taskService})
       : _taskService = taskService;
@@ -79,7 +79,9 @@ class HomeController extends DefaultChangeNotifier {
     } else {
       selectedDay = null;
     }
-
+    if (!showFinishingTasks) {
+      filteredTasks = filteredTasks.where((task) => !task.finished).toList();
+    }
     hideLoading();
     notifyListeners();
   }
@@ -96,5 +98,21 @@ class HomeController extends DefaultChangeNotifier {
     await findTasks(filter: filterSelected);
     loadTotalTasks();
     notifyListeners();
+  }
+
+  Future<void> checkOrUncheckTask(TaskModel task) async {
+    showLoadingAndResetState();
+    notifyListeners();
+    final taskUpdate = task.copyWith(
+      finished: !task.finished,
+    );
+    await _taskService.checkOrUncheckTask(taskUpdate);
+    hideLoading();
+    refreshPage();
+  }
+
+  Future<void> showOrHideFinishingTasks() async {
+    showFinishingTasks = !showFinishingTasks;
+    refreshPage();
   }
 }

@@ -40,4 +40,8 @@ class TaskServiceImpl implements TaskService {
       tasks: tasks,
     );
   }
+
+  @override
+  Future<void> checkOrUncheckTask(TaskModel task) =>
+      _taskRepository.checkOrUncheckTask(task);
 }
