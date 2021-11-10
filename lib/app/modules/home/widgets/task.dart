@@ -46,6 +46,12 @@ class Task extends StatelessWidget {
                 ? const TextStyle(decoration: TextDecoration.lineThrough)
                 : null,
           ),
+          trailing: IconButton(
+            icon: const Icon(Icons.delete, size: 30),
+            color: Colors.red,
+            onPressed: () =>
+                context.read<HomeController>().deleteTask(_model.id),
+          ),
         ),
       ),
     );
