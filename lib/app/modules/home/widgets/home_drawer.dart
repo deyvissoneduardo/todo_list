@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_list/app/core/auth/auth_provider.dart';
 import 'package:todo_list/app/core/ui/messages.dart';
 import 'package:todo_list/app/core/ui/theme_extensions.dart';
+import 'package:todo_list/app/modules/home/home_controller.dart';
 import 'package:todo_list/app/services/user/user_service.dart';
 
 class HomeDrawer extends StatelessWidget {
@@ -94,7 +95,10 @@ class HomeDrawer extends StatelessWidget {
           ),
           ListTile(
             title: const Text('Sair do App'),
-            onTap: () => context.read<AuthProvider>().logout(),
+            onTap: () {
+              context.read<HomeController>().deleteAllTable();
+              context.read<AuthProvider>().logout();
+            },
           ),
         ],
       ),

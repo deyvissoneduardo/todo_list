@@ -123,4 +123,12 @@ class HomeController extends DefaultChangeNotifier {
     hideLoading();
     refreshPage();
   }
+
+  Future<void> deleteAllTable() async {
+    showLoadingAndResetState();
+    notifyListeners();
+    await _taskService.deleteAllTable();
+    hideLoading();
+    refreshPage();
+  }
 }

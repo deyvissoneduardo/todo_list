@@ -54,4 +54,10 @@ class TaskRepositoryImpl implements TaskRepository {
       id,
     ]);
   }
+
+  @override
+  Future<void> deleteAllTable() async {
+    final conn = await _sqliteConnectionFactory.openConnection();
+    await conn.rawUpdate('delete from todo');
+  }
 }
